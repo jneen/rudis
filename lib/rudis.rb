@@ -13,3 +13,6 @@ end
 
 class Rudis
 end
+
+require_local 'rudis/base'
+require_local 'rudis/type'
