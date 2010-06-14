@@ -1,5 +1,5 @@
 class Rudis
-  class String < Type
+  class String < Structure
     def set(val)
       redis[key] = serializer.put(val)
     end

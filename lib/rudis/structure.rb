@@ -1,5 +1,9 @@
 class Rudis
   class Structure < Base
+    def type
+      @options[:type]
+    end
+
     def default_options
       {:type => DefaultType}
     end

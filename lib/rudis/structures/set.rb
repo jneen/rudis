@@ -1,19 +1,22 @@
 class Rudis
-  class Set < Type
+  class Set < Structure
     def members
-      redis.smembers(key).map do |k|
-        serializer.get(k)
+      mems = redis.smembers(key)
+      mems.map! do |k|
+        type.get(k)
       end
+      mems
     end
     alias all members
     alias to_a members
 
     def add(val)
-      redis.sadd(key, serializer.put(val))
+      redis.sadd(key, type.put(val))
     end
+    alias << add
 
     def is_member?(val)
-      redis.sismember(key, serializer.put(val))
+      redis.sismember(key, type.put(val))
     end
     alias member? is_member?
     alias include? is_member?
@@ -24,6 +27,12 @@ class Rudis
     alias count card
     alias size card
     alias length card
+
+    def rem(val)
+      redis.srem(key, type.put(val))
+    end
+    alias remove rem
+    alias delete rem
 
     def sort(*args)
       #TODO

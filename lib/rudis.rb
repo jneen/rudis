@@ -16,3 +16,4 @@ end
 
 require_local 'rudis/base'
 require_local 'rudis/type'
+require_local 'rudis/structure'
