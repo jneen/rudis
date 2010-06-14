@@ -11,7 +11,7 @@ class Rudis
 
     attr_writer :key_base
     def key_base
-      @key_base ||= 'rudis'
+      @key_base ||= ['rudis']
     end
 
     attr_writer :key_sep
@@ -20,7 +20,35 @@ class Rudis
     end
 
     def key(*args)
-      ([key_base] + args).join(key_sep)
+      ([key_base].flatten + args).join(key_sep)
+    end
+  end
+
+
+  class Base < Rudis
+    class << self
+      attr_writer :redis
+      def self.redis
+        @redis ||= super
+      end
+    end
+
+    def redis
+      @redis ||= self.class.redis
+    end
+
+    def initialize(key, options={})
+      @key = key
+      @options = options
+      @options.rmerge!(default_options)
+    end
+
+    def default_options
+      {}
+    end
+
+    def key(*args)
+      self.class.key(@key, *args)
     end
   end
 end
