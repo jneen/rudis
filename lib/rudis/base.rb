@@ -31,6 +31,11 @@ class Rudis
       def self.redis
         @redis ||= super
       end
+
+      attr_writer :instance_key_base
+      def self.instance_key_base
+        @instance_key_base ||= []
+      end
     end
 
     def redis
