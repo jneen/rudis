@@ -38,6 +38,20 @@ class Rudis
     def ttl
       redis.ttl(key)
     end
+
+    def watch(tries=0)
+      return redis.watch(key) unless block_given?
+
+      begin
+        redis.watch(key)
+        c = 0
+        while yield.nil? && (tries==0 || (c+=1) <= tries)
+          puts "Optimistic lock failed for #{key}, retrying #{c} time(s)"
+        end
+      ensure
+        redis.unwatch(key)
+      end
+    end
   end
 end
 
