@@ -34,6 +34,17 @@ class Rudis
     alias remove rem
     alias delete rem
 
+    def randmember
+      e = redis.srandmember(key)
+      e && type.get(e)
+    end
+    alias rand randmember
+
+    def pop
+      e = redis.spop(key)
+      e && type.get(e)
+    end
+
     def sort(*args)
       #TODO
     end

@@ -17,6 +17,11 @@ describe Rudis::Set do
     @set.count.should == 2
     @set.delete "foo"
     @set.size.should == 1
+    @set.to_a.should == ["bar"]
+    @set.rand.should == "bar"
+    @set.pop.should == "bar"
+    @set.to_a.should == []
+    @set.pop.should be_nil
   end
 
 end
