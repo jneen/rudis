@@ -16,4 +16,8 @@ module Enumerable
     end
     hist
   end
+
+  def hashmap
+    map { [self, yield(self)] }.to_h
+  end
 end
