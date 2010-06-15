@@ -1,5 +1,5 @@
 class Rudis
-  class Hash
+  class Hash < Structure
     def default_options
       {
         :type => DefaultType,
@@ -18,7 +18,7 @@ class Rudis
     alias [] get
 
     def set(k,v)
-      redis.hset(key, key_type.put(k), type.put(val)
+      redis.hset(key, key_type.put(k), type.put(v))
     end
     alias []= set
 
@@ -34,9 +34,9 @@ class Rudis
     def mset(hsh)
       hsh = hsh.dup
       hsh.map! {|k,v| [key_type.put(k), type.put(v)]}
-      redis.hmset(key, *hsh.to_a)
+      redis.hmset(key, *hsh.to_a.flatten)
     end
-    alias merge mset
+    alias merge! mset
 
     def keys
       redis.hkeys(key).map { |k| key_type.get(k) }
@@ -60,6 +60,10 @@ class Rudis
     alias length len
     alias count len
     alias size len
+
+    def empty?
+      len == 0
+    end
 
     def del(k)
       redis.hdel(key, key_type.put(k))
