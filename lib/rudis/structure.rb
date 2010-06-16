@@ -55,7 +55,8 @@ class Rudis
   end
 end
 
-require_local 'structures/string'
-require_local 'structures/set'
 require_local 'structures/list'
 require_local 'structures/hash'
+require_local 'structures/set'
+require_local 'structures/string'
+require_local 'structures/zset'
