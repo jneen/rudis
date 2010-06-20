@@ -28,6 +28,8 @@ class Rudis
       return false
     end
 
+    # implements the SETNX locking algorithm from
+    # http://code.google.com/p/redis/wiki/SetnxCommand
     def set(options={})
       options.rmerge!(
         :timeout => 30
