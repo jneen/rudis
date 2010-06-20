@@ -8,7 +8,7 @@ class Rudis
     end
 
     def score_type
-      options[:score_type]
+      @options[:score_type]
     end
 
     def add(member, score=1)
@@ -40,17 +40,30 @@ class Rudis
     alias length card
     alias count card
 
+    def empty?
+      card == 0
+    end
+
     def range(ran)
-      redis.zrange(key, ran.first.to_i, ran.last.to_i)
+      redis.zrange(key, ran.first.to_i, ran.last.to_i).map do |e|
+        type.get(e)
+      end
     end
 
     def revrange(ran)
-      redis.zrevrange(key, ran.first.to_i, ran.last.to_i)
+      redis.zrevrange(key, ran.first.to_i, ran.last.to_i).map do |e|
+        type.get(e)
+      end
     end
     alias rev_range revrange
 
     def rangebyscore(min, max)
-      redis.zrangebyscore(key, score_type.put(min), score_type.put(max))
+      redis.zrangebyscore(key,
+        score_type.put(min),
+        score_type.put(max)
+      ).map do |e|
+        type.get(e)
+      end
     end
     alias range_by_score rangebyscore
 
@@ -58,13 +71,33 @@ class Rudis
       if val.is_a? Range
         range(val)
       else
-        score(val)
+        self[val..val]
       end
     end
-    
-    def score(member)
-      score_type.get(redis.zscore(key, member))
+    alias slice []
+
+    def all
+      range(0..-1)
     end
+    alias to_a all
+
+    def first
+      self[0..0].first
+    end
+
+    def last
+      self[-1..-1].first
+    end
+
+    def score(member)
+      s = redis.zscore(key, type.put(member))
+      s && score_type.get(s)
+    end
+
+    def member?(val)
+      !score(val).nil?
+    end
+    alias include? member?
 
   end
 end
