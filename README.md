@@ -18,24 +18,26 @@ A type consists of any object that responds to `put` and `get`.These are used to
 
 You can write your own types, too!
 
-    >> class ActiveRecordType
-    >>   def initialize(model)
-    >>     @model = model
-    >>   end
-    >>   def self.put(val)
-    >>     val.id
-    >>   end
-    >>   def self.get(val)
-    >>     @model.find(val.to_i)
-    >>   end
+    class ActiveRecordType
+      def initialize(model)
+        @model = model
+      end
+      def self.put(val)
+        val.id
+      end
+      def self.get(val)
+        @model.find(val.to_i)
+      end
+    end
 
 Recipes
 -------
 
 A recipe is a subclass of `Rudis::Base`.  Rudis provides two handy-dandy methods: `key` and `redis`.  `redis` is both an instance method and a class method that gives you an instance of Redis (writable, with sensible defaults).  `key` is really handy:
 
-    >> class Foo << Rudis::Base
-    >> end
+    class Foo < Rudis::Base
+    end
+
     >> Foo.new('foo').key
     => "foo"
     >> Foo.new('foo').key('bar', 'baz')
