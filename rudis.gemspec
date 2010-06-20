@@ -9,9 +9,18 @@ spec = Gem::Specification.new do |s|
     redis instances and keys.
   desc
 
+  s.files = (
+    Dir['lib/**/*.rb'] +
+    Dir['spec/**/*.rb'] +
+    Dir['vendor/**/*.rb'] +
+    %w(init.rb Rakefile README.md)
+  )
+
+  s.author = 'Jay Adkisson'
   s.email = 'j4yferd@gmail.com'
+  s.homepage = 'http://github.com/jayferd/rudis'
 
   s.has_rdoc = false
 
-  s.required_ruby_version '>= 1.8.7'
+  s.required_ruby_version = '>= 1.8.7'
 end
