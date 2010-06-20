@@ -20,6 +20,8 @@ spec = Gem::Specification.new do |s|
   s.email = 'j4yferd@gmail.com'
   s.homepage = 'http://github.com/jayferd/rudis'
 
+  s.license = 'MIT'
+
   s.has_rdoc = false
 
   s.required_ruby_version = '>= 1.8.7'
