@@ -55,7 +55,9 @@ class Rudis
   end
 end
 
+require_local 'structures/counter'
 require_local 'structures/list'
+require_local 'structures/lock'
 require_local 'structures/hash'
 require_local 'structures/set'
 require_local 'structures/string'
