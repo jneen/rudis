@@ -2,7 +2,7 @@
 vendor/core_ext: 
   branch: master
   remote: braid/vendor/core-ext
-  revision: daba336ea6d72d82590d8780572f159e6af65ff6
+  revision: c74d626e12b2527db2f85a15f818226d628fd5eb
   squashed: true
   type: git
   url: git://github.com/jayferd/core_ext
