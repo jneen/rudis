@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
     Dir['lib/**/*.rb'] +
     Dir['spec/**/*.rb'] +
     Dir['vendor/**/*.rb'] +
-    %w(init.rb Rakefile README.md)
+    %w(init.rb Rakefile README.md LICENSE)
   )
 
   s.author = 'Jay Adkisson'
