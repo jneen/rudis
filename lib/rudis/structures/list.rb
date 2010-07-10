@@ -12,12 +12,12 @@ class Rudis
     end
 
     def index(i)
-      type.get(redis.lindex(key, i.to_i))
+      type.load(redis.lindex(key, i.to_i))
     end
 
     def range(range)
       redis.lrange(key, range.first.to_i, range.last.to_i).map do |e|
-        type.get(e)
+        type.load(e)
       end
     end
 
@@ -35,31 +35,31 @@ class Rudis
     end
 
     def set(i, val)
-      redis.lset(key, i.to_i, type.put(val))
+      redis.lset(key, i.to_i, type.dump(val))
     end
     alias []= set
 
     def rpush(val)
-      redis.rpush(key, type.put(val))
+      redis.rpush(key, type.dump(val))
     end
     alias push rpush
     alias << rpush
 
     def rpop
       e = redis.rpop(key)
-      e && type.get(e)
+      e && type.load(e)
     end
     alias pop rpop
 
     def lpush(val)
-      redis.lpush(key, type.put(val))
+      redis.lpush(key, type.dump(val))
     end
     alias unshift lpush
     alias >> lpush
 
     def lpop
       e = redis.lpop(key)
-      e && type.get(e)
+      e && type.load(e)
     end
     alias shift lpop
 

@@ -12,12 +12,12 @@ class Rudis
     end
 
     def add(member, score=1)
-      redis.zadd(key, score_type.put(score), type.put(member))
+      redis.zadd(key, score_type.dump(score), type.dump(member))
     end
     alias << add
 
     def rem(member)
-      redis.zrem(key, type.put(member))
+      redis.zrem(key, type.dump(member))
     end
 
     def incrby(member, i)
@@ -46,23 +46,23 @@ class Rudis
 
     def range(ran)
       redis.zrange(key, ran.first.to_i, ran.last.to_i).map do |e|
-        type.get(e)
+        type.load(e)
       end
     end
 
     def revrange(ran)
       redis.zrevrange(key, ran.first.to_i, ran.last.to_i).map do |e|
-        type.get(e)
+        type.load(e)
       end
     end
     alias rev_range revrange
 
     def rangebyscore(min, max)
       redis.zrangebyscore(key,
-        score_type.put(min),
-        score_type.put(max)
+        score_type.dump(min),
+        score_type.dump(max)
       ).map do |e|
-        type.get(e)
+        type.load(e)
       end
     end
     alias range_by_score rangebyscore
@@ -90,8 +90,8 @@ class Rudis
     end
 
     def score(member)
-      s = redis.zscore(key, type.put(member))
-      s && score_type.get(s)
+      s = redis.zscore(key, type.dump(member))
+      s && score_type.load(s)
     end
 
     def member?(val)
